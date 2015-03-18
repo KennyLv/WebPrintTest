@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   	<title>CSS Media Test</title>
+	
+	<script type="text/javascript" src="../jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../src/printpec.0.1.js"></script>
+	
+	<!--[if IE]><![endif]-->
+	
+	<!--  IE下 运行不成功 。。。
+	<style> 
+		@media print {
+			.notprint { 
+				opacity: 0;
+			}
+		}
+	</style>
+	-->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#print_j").bind("click", function(){jQueryPrintDiv("div_to_print");});
+			
+		});
+	</script>
+	
+</head>
+<body>
+<div>
+	<h1 style="Color:Red">The Div content which you don't  want to print</h1>
+	
+	<input name="b_print" type="button" onClick="printDiv('div_to_print');" value=" Print ">
+	<input name="b_print" type="button"  id="print_j" value=" Print_jQuery ">
+	<div id="div_to_print">
+		<!--  Your conetnt should be inclueded here ...  -->
+		<div style="border: 1px solid lightblue;">
+			<h1 style="color:Red;"  class="notprint">Name : </h1>
+			<h1 style="color:Black">Your content which to print</h1>
+			<h1 style="color:Red;"  class="notprint">Prise : </h1>
+			<h1 style="color:Black">Your content which to print</h1>
+		</div>
+	</div>
+	
+	<h1 style="Color:Red">The Div content which you don't  want to print</h1>
+	
+</div>
+</body>
+</html>
+
