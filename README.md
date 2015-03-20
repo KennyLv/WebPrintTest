@@ -20,6 +20,7 @@ To print selected area on the web.
   * copy the html to new iframe and set print style
   * foucus on new iframe and print.
   * remove this iframe
+
 **Second way - Known issues:**
  * new iframe need to be visiable during print
  * new iframe didn't copy the style sheet, so the print area shouldn't contains refered css class
