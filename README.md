@@ -13,8 +13,6 @@ To print selected area on the web.
 
 **- First way - Known issues:**
  * will print the body's style like bk-color if has 
-> The affect of parent nose's style can't be dismissed
- 
 
 ```
 <script type="text/javascript" src="../src/printspec.0.2.js"></script>
@@ -38,3 +36,7 @@ To print selected area on the web.
 
 (new kPrinter_2(_divId)).printDiv();
 ```
+
+
+> In both way, the affect of parent node's style can't be dismissed
+ 
