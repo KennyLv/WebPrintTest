@@ -13,7 +13,7 @@ To print selected area on the web.
 
 **- First way - Known issues:**
  * will print the body's style like bk-color if has 
- > The affect of parent nose's style can't be dismissed
+> The affect of parent nose's style can't be dismissed
  
 
 ```
