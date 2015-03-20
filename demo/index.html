@@ -10,12 +10,58 @@
 	<script type="text/javascript" src="../my_template.js"></script>
 	<!--JSON美化展示-->
 	<script type="text/javascript" src="../json-beautify.js"></script>
-	<!-- 打印-->
-	<script type="text/javascript" src="../src/printspec.0.1.js"></script>
+	<!-- 打印方法1-->
+	<script type="text/javascript" src="../src/printspec.0.2.js"></script>
+	<!-- 打印方法2-->
+	<script type="text/javascript" src="../src/printspec.0.3.js"></script>
+	<!--模板 1 -->
+	<script id="print_template_1" type="text/html">
+		<div style="border: 1px solid lightblue;width:700px;height:140px;padding:40px;">
+			<span style="color:Black;" class="notprint">发票号码 : </span>
+			<input style="color:#91aae0;" value="<%==  p.发票号码  =%>" />
+			<span style="color:Black;" class="notprint">付款方: </span>
+			<input style="color:#91aae0;" value="<%==  p.付款方  =%>" />
+		</div>
+	</script>
 	
-	<!--[if IE]>
-	<![endif]-->
-	<!--  IE下 运行不成功 。。。
+	<script id="print_template_2" type="text/html">
+		<div style="border: 1px solid lightblue;width:700px;height:140px;padding:40px;">
+			<span style="color:Black;">发票号码 : </span>
+			<input style="color:#91aae0;" class="printable" value="<%==  p.发票号码  =%>" />
+			<span style="color:Black;">付款方: </span>
+			<input style="color:#91aae0;" class="printable" value="<%==  p.付款方  =%>" />
+		</div>
+	</script>
+	
+	<script type="text/javascript">
+		function printdiv1(_divId){
+			(new kPrinter_1(_divId)).printDiv();
+		}
+		function printdiv2(_divId){
+			(new kPrinter_2(_divId)).printDiv();
+		}
+		
+		$(document).ready(function(){
+			$.getJSON("data.json", function(data){
+				/*
+				//TODO : IE7 不支持 JSON 对象, 需要在head中添加JSON.js
+				// 美化拿到的JSON数据，并展示在页面上（指定位置）
+				*/
+				$("#div_data_to_print").append(beautifyJSON(data));
+				
+				/*
+				// TODO : 如果外部引用template，需要等模板加载完成后调用
+				// 使用自定义的页面模板将数据展示在页面上（指定位置）
+				*/
+				$("#div_to_print_1").append( new JTemp('print_template_1').build( data ) );
+				$("#div_to_print_2").append( new JTemp('print_template_2').build( data ) );
+				
+			});
+		});
+	</script>
+	<!--[if IE]><![endif]-->
+	<!--  
+	IE下 运行不成功 。。。
 	<style> 
 		@media print {
 			.notprint { 
@@ -24,83 +70,87 @@
 		}
 	</style>
 	-->
-	
-	<!--模板-->
-	<script id="print_template" type="text/html">
-		<div style="border: 1px solid lightblue;">
-			<h1 style="color:Red" class="notprint">Name : </h1>
-			<h1><%==  p.发票号码  =%></h1>
-			<h1 style="color:Red" class="notprint">Prise : </h1>
-			<h1><%==  p.付款方  =%></h1>
-		</div>
-	</script>
-	
-	<script type="text/javascript">
-	
-		$(document).ready(function(){
-		
-			$.getJSON("data.json", function(data){
-				/*
-				//TODO : IE 不支持 JSON 对象, 需要在head中添加JSON.js
-				// 美化拿到的JSON数据，并展示在页面上（指定位置）
-				*/
-				$("#div_data_to_print").append(beautifyJSON(data));
-				
-				/*
-				// TODO : IE 不支持 自定义的模板，需要另寻它法
-				// 使用自定义的页面模板将数据展示在页面上（指定位置）
-				*/
-				$("#div_to_print").append( new JTemp('print_template').build( data ) );
-				
-				/*
-				//Using template of underscore.js
-				var compiled = _.template(
-					  '<div style="border: 1px solid lightblue;">'
-					+ '<h1 style="color:Red;"  class="notprint">Name : </h1>'
-					+ '<h1 style="color:Black"><%- "code"  %></h1>'
-					+ '<h1 style="color:Red;"  class="notprint">Prise : </h1>'
-					+ '<h1 style="color:Black" data-bind="时间"></h1>'
-					+ '</div>');
-				compiled({'code':"123242354356"});
-				$("#div_to_print").append( compiled );
-				var compiled = _.template("<h1><%- '12' %></h1>");
-				compiled({ 12 : "123242354356"});
-				console.log(compiled);
-				$("#div_to_print").append( compiled );
-				$("#div_to_print").html( _.template($("#div_to_print").html(), data)); 
-
-				//Using agility.js
-				var info_view = $$({}, 
-					'<div style="border: 1px solid lightblue;">'
-					+ '<h1 style="color:Red;"  class="notprint">Name : </h1>'
-					+ '<h1 style="color:Black" data-bind="发票号码"></h1>'
-					+ '<h1 style="color:Red;"  class="notprint">Prise : </h1>'
-					+ '<h1 style="color:Black" data-bind="时间"></h1>'
-					+ '</div>'
-				);
-				var employmentInfo_html = $$(info_view, data);
-				$("#div_to_print").append(employmentInfo_html.view.$root);
-				*/
-			});
-		});
-	</script>
 </head>
 <body>
 <div>
 	<h1 style="Color:Red">The Div content which you don't  want to print</h1>
-	<div id="div_data_to_print"></div>
-	
-	<input name="b_print" type="button" onClick="printDiv('div_to_print');" value=" Print, IE not support... ">
-	<input name="j_print" type="button" onClick="jQueryPrintDiv('div_to_print');" value=" Print_jQuery ">
-	<div id="div_to_print">
-	
-		<!--  Your conetnt should be inclueded here ...  -->
-		
+	<div style=" width: 100%;float: left; ">
+		<div style="font-size:14px; width:300px;background-color:lightblue; float: left; " id="div_data_to_print"></div>
+		<pre style="font-size:14px; background-color:rgb(230, 218, 173); float: left;  margin-left:20px;">
+			&lt;!-- 方法1， 在当前页面重写body，使用.notprint隐藏非打印元素 (简单)  --&gt;
+
+			&lt;div style="border: 1px solid lightblue;width:700px;height:140px;padding:40px;"&gt;
+				&lt;span style="color:Black;" class="notprint"&gt;发票号码 : &lt;/span&gt;
+				&lt;input style="color:#91aae0;" value="<%==  p.发票号码  =%>" /&gt;
+				&lt;span style="color:Black;" class="notprint"&gt;付款方: &lt;/span&gt;
+				&lt;input style="color:#91aae0;" value="<%==  p.付款方  =%>" /&gt;
+			&lt;/div&gt;
+		</pre>
+		<pre style="font-size:14px; background-color:rgb(230, 218, 173); float: left;  margin-left:20px;">
+			&lt;!-- 方法2， 在当前页面加载隐藏iframe，使用printable标记需要打印的元素，回溯父节点设置可见  --&gt;
+			&lt;!-- ISSUE 1 ：IE不支持隐藏状态下的focus()  --&gt;
+			&lt;!-- ISSUE 2：iframe只copy 了内容，没有copy样式，遇到有外部样式表就玩完--&gt;
+
+			&lt;div style="border: 1px solid lightblue;width:700px;height:140px;padding:40px;"&gt;
+				&lt;span style="color:Black;"&gt;发票号码 : &lt;/span&gt;
+				&lt;input style="color:#91aae0;" class="printable" value="<%==  p.发票号码  =%>" /&gt;
+				&lt;span style="color:Black;"&gt;付款方: &lt;/span&gt;
+				&lt;input style="color:#91aae0;" class="printable" value="<%==  p.付款方  =%>" /&gt;
+			&lt;/div&gt;
+		</pre>
+		 <div   style="clear:both"></div> 
 	</div>
-	
-	<h1 style="Color:Red">The Div content which you don't  want to print</h1>
-	
+	<br/>
+	<div style=" width: 100%; float: left;">
+		<input name="b1_print" type="button" onClick="printdiv1('div_to_print_1');" value=" Print1">
+		<div id="div_to_print_1"><!--  Your conetnt should be inclueded here ...  --></div>
+	</div>
+	<div style=" width: 100%; float: left;">
+		<input name="b2_print" type="button" onClick="printdiv2('div_to_print_2');" value=" Print2">
+		<div id="div_to_print_2"><!--  Your conetnt should be inclueded here ...  --></div>
+	</div>
+	<br/>
 </div>
 </body>
-</html>
+<script>
 
+/* 
+ * Dropped code : not support by IE
+ *
+
+//Using template of underscore.js
+var compiled = _.template(
+	  '<div style="border: 1px solid lightblue;">'
+	+ '<h1 style="color:Red;"  class="notprint">Name : </h1>'
+	+ '<h1 style="color:Black"><%- "code"  %></h1>'
+	+ '<h1 style="color:Red;"  class="notprint">Prise : </h1>'
+	+ '<h1 style="color:Black" data-bind="时间"></h1>'
+	+ '</div>');
+compiled({'code':"123242354356"});
+$("#div_to_print").append( compiled );
+var compiled = _.template("<h1><%- '12' %></h1>");
+compiled({ 12 : "123242354356"});
+console.log(compiled);
+$("#div_to_print").append( compiled );
+$("#div_to_print").html( _.template($("#div_to_print").html(), data)); 
+
+
+//Using agility.js
+var info_view = $$({}, 
+	'<div style="border: 1px solid lightblue;">'
+	+ '<h1 style="color:Red;"  class="notprint">Name : </h1>'
+	+ '<h1 style="color:Black" data-bind="发票号码"></h1>'
+	+ '<h1 style="color:Red;"  class="notprint">Prise : </h1>'
+	+ '<h1 style="color:Black" data-bind="时间"></h1>'
+	+ '</div>'
+);
+var employmentInfo_html = $$(info_view, data);
+$("#div_to_print").append(employmentInfo_html.view.$root);
+
+<!--<h1 style="Color:Red">&copy; Copyright</h1>-->
+<!-- ©  -->
+<!-- Alt + 169 -->
+<!-- &copy;  -->
+*/
+</script>
+</html>
