@@ -10,6 +10,11 @@ To print selected area on the web.
   * insert the print style sheet into the head
   * print
   * reset current body to stored body html and remove the style sheet
+
+**First way - Known issues:**
+ * will print the body's style like bk-color if has 
+ 
+
 ```
 <script type="text/javascript" src="../src/printspec.0.2.js"></script>
 
