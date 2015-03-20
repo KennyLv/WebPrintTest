@@ -11,7 +11,7 @@ To print selected area on the web.
   * print
   * reset current body to stored body html and remove the style sheet
 
-**First way - Known issues:**
+**- First way - Known issues:**
  * will print the body's style like bk-color if has 
  
 
@@ -28,7 +28,7 @@ To print selected area on the web.
   * foucus on new iframe and print
   * remove this iframe
 
-**Second way - Known issues:**
+**- Second way - Known issues:**
  * new iframe need to be visiable during print
  * new iframe didn't copy the style sheet, so the print area shouldn't contains refered css class
 
