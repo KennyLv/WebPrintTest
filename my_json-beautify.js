@@ -17,34 +17,35 @@ function beautifyJSON(data){
 	}
 	
 	var reg = null, pad = 0, PADDING = '....', result ='';
-	// ÔÚ´óÀ¨ºÅÇ°ºóÌí¼Ó»»ĞĞ
+	// åœ¨å¤§æ‹¬å·å‰åæ·»åŠ æ¢è¡Œ
 	reg = /([\{\}])/g;
 	json = json.replace(reg, '\r\n$1\r\n');
-	// ÖĞÀ¨ºÅÇ°ºóÌí¼Ó»»ĞĞ
+	// ä¸­æ‹¬å·å‰åæ·»åŠ æ¢è¡Œ
 	reg = /([\[\]])/g;
 	json = json.replace(reg, '\r\n$1\r\n');
-	// ¶ººÅºóÃæÌí¼Ó»»ĞĞ
+	// é€—å·åé¢æ·»åŠ æ¢è¡Œ
 	reg = /(\,)/g;
 	json = json.replace(reg, '$1\r\n');
 
-	// È¥³ı¶àÓàµÄ»»ĞĞ
+	// å»é™¤å¤šä½™çš„æ¢è¡Œ
 	reg = /(\r\n\r\n)/g;
 	json = json.replace(reg, '\r\n');
-	// ¶ººÅÇ°ÃæµÄ»»ĞĞÈ¥µô
+	// é€—å·å‰é¢çš„æ¢è¡Œå»æ‰
 	reg = /\r\n\,/g;
 	json = json.replace(reg, ',');
-	//Ã°ºÅÇ°ÃæËõ½ø
+	//å†’å·å‰é¢ç¼©è¿›
 	reg = /\:/g;
 	json = json.replace(reg, ': ');
 
-	//¶ÔÃ¿Ò»¸öÇĞ·Öµ¥Ôª½øĞĞ´¦Àí£¬°üÀ¨Ëõ½øºÍÃÀ»¯¸ñÊ½¡£
+	//å¯¹æ¯ä¸€ä¸ªåˆ‡åˆ†å•å…ƒè¿›è¡Œå¤„ç†ï¼ŒåŒ…æ‹¬ç¼©è¿›å’Œç¾åŒ–æ ¼å¼ã€‚
 	//$.each(json.split('\r\n'), function(index, node) {});
 	var jsonLineArr = json.split('\r\n');
 	for(var index = 0; index < jsonLineArr.length; index ++){
+		//FOR IE
 		var node = GB2312UnicodeConverter.ToGB2312(jsonLineArr[index]);
 		
 		var i = 0, indent = 0, padding = '';
-		//ÕâÀïÓöµ½{¡¢[Ê±Ëõ½øµÈ¼¶¼Ó1£¬Óöµ½}¡¢]Ê±Ëõ½øµÈ¼¶¼õ1£¬Ã»Óöµ½Ê±Ëõ½øµÈ¼¶²»±ä
+		//è¿™é‡Œé‡åˆ°{ã€[æ—¶ç¼©è¿›ç­‰çº§åŠ 1ï¼Œé‡åˆ°}ã€]æ—¶ç¼©è¿›ç­‰çº§å‡1ï¼Œæ²¡é‡åˆ°æ—¶ç¼©è¿›ç­‰çº§ä¸å˜
 		if (node.match(/\{$/) || node.match(/\[$/)) {
 		    indent = 1;
 		} else if (node.match(/\}/) || node.match(/\]/)) {
@@ -54,11 +55,11 @@ function beautifyJSON(data){
 		} else {
 		    indent = 0;
 		}
-		//padding±£´æÊµ¼ÊµÄËõ½ø
+		//paddingä¿å­˜å®é™…çš„ç¼©è¿›
 		for (i = 0; i < pad; i++) {
 			padding += PADDING;
 		}
-		//Ìí¼Ó´úÂë¸ßÁÁ
+		//æ·»åŠ ä»£ç é«˜äº®
 		/*
 		<style> 
 			.ObjectBrace{color:#00AA00;font-weight:bold;}
@@ -74,7 +75,7 @@ function beautifyJSON(data){
 			    -webkit-opacity: 0.5;  
 			    //Netscape and Older than Firefox 0.9
 			    -moz-opacity: 0.5;  
-			    // Safari 1.x (pre WebKit!) ÀÏÊ½khtmlÄÚºËµÄSafariä¯ÀÀÆ÷
+			    // Safari 1.x (pre WebKit!) è€å¼khtmlå†…æ ¸çš„Safariæµè§ˆå™¨
 			    -khtml-opacity: 0.5;  
 			    // IE9 + etc...modern browsers
 			    opacity: .5;  
@@ -93,12 +94,11 @@ function beautifyJSON(data){
 		node = node.replace(/(\".*\")(\:)(.*)(\,)?/g,"<span class='PropertyName'>$1</span>$2$3$4");
 		node = node.replace(/\"([^"]*)\"(\,)?$/g,"<span class='String'>\"$1\"</span><span class='Comma'>$2</span>");
 		node = node.replace(/(-?\d+)(\,)?$/g,"<span class='Number'>$1</span><span class='Comma'>$2</span>");
-		//TODO : IE ²»Ö§³Ö opacity
+		//TODO : IE ä¸æ”¯æŒ opacity
 		result += "<span style='filter:alpha(opacity=10);opacity:0;color:white;'>"+ padding + "</span>" + node + '<br>';
 		pad += indent;
 	
 	}
-	//FOR IE
 	
 	return result;
 	
