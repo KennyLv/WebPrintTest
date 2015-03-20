@@ -6,9 +6,10 @@ To print selected area on the web.
 
 **First way**
   * store current body html
-  * copy selected html and set to body, add the style
+  * copy selected html of print area and set to current body
+  * insert the print style sheet into the head
   * print
-  * reset body to stored body html and remove the style
+  * reset current body to stored body html and remove the style sheet
 ```
 <script type="text/javascript" src="../src/printspec.0.2.js"></script>
 
@@ -17,8 +18,9 @@ To print selected area on the web.
  
 **Second way**
   * creat a hiden iframe
-  * copy the html to new iframe and set print style
-  * foucus on new iframe and print.
+  * copy selected html of print area and set to new iframe's body
+  * set print style in new iframe
+  * foucus on new iframe and print
   * remove this iframe
 
 **Second way - Known issues:**
