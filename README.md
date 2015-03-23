@@ -1,6 +1,6 @@
 ## About WebPrint
 
-To print selected area on the web.
+**Chromatography printing** the selected area on the web.
 
 ## How
 
