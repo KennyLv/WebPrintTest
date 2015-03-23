@@ -11,16 +11,22 @@
 	
 	<script type="text/javascript">
 		function printdiv1(_divId){
-			//TODO : 修改input的值
+			//设置input的值为输入值
+			$("#" + _divId + " input").each(function(index,item){
+				$(item).attr("value",$(item).val());
+			});
 			(new kPrinter_1(_divId)).printDiv();
 		}
 		function printdiv2(_divId){
+			//设置input的值为输入值
+			$("#" + _divId + " input").each(function(index,item){
+				$(item).attr("value",$(item).val());
+			});
 			(new kPrinter_2(_divId)).printDiv();
 		}
 		
 		$(document).ready(function(){
-
-		
+			//TODO ： 控制print是否可点击
 		});
 	</script>
 	<!--[if IE]><![endif]-->
@@ -38,14 +44,23 @@
 <body>
 <div>
 	<h1 style="Color:Red">The Div content which you don't  want to print</h1>
-	<input name="b1_print" type="button" onClick="printdiv1('div_to_print_1');" value=" Print1">
-	<input name="b1_print" type="button" onClick="printdiv2('div_to_print_1');" value=" Print2">
+	<input name="b1_print" type="button" onClick="printdiv1('div_to_print_1');" value=" Print 1">
 	<div id="div_to_print_1">
 		<div style="border: 1px solid lightblue;width:700px;height:140px;padding:40px;">
-			<span style="color:Black;" class="notprint">发票号码 : </span>
-			<input style="color:#91aae0;" value=""> </input>
+			<span style="color:Black;" class="notprint" >发票号码 : </span>
+			<input style="color:#91aae0;" value=""></input>
 			<span style="color:Black;" class="notprint">付款方: </span>
 			<input style="color:#91aae0;" value=""> </input>
+		</div>
+	</div>
+	<br/>
+	<input name="b1_print" type="button" onClick="printdiv2('div_to_print_2');" value=" Print 2">
+	<div id="div_to_print_2">
+		<div style="border: 1px solid lightblue;width:700px;height:140px;padding:40px;">
+			<span style="color:Black;" >发票号码 : </span>
+			<input style="color:#91aae0;" class="printable"  value=""></input>
+			<span style="color:Black;">付款方: </span>
+			<input style="color:#91aae0;" class="printable" value=""> </input>
 		</div>
 	</div>
 </div>
