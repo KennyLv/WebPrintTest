@@ -6,7 +6,7 @@ function kPrinter_1(divId){
 		style.id = "no_print_style";
 		//var styles = ".notprint {opacity: 0;}";
 		//var styles = isVisiable ? ".notprint {visibility:visible;}" : ".notprint {visibility:hidden;}";
-		var styles = ".notprint {visibility:hidden;} input{border:0;text-align:left;}";
+		var styles = ".notprint {visibility:hidden;} input{border:0;text-align:left;} textarea{border: none;overflow: hidden; }";
 		
 		if (style.styleSheet) { //for ie
 			style.styleSheet.cssText = styles;

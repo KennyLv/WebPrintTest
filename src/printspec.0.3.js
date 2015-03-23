@@ -9,7 +9,7 @@ function kPrinter_2(divId){
 		var _printDiv = document.getElementById(this._divId);
 		iframe.width = _printDiv.offsetWidth;
 		iframe.height = _printDiv.offsetHeight;
-		iframe.contentWindow.document.write("<style>.noprint{visibility:hidden;} input{border:0;text-align:left;} }</style>");
+		iframe.contentWindow.document.write("<style>.noprint{visibility:hidden;} input{border:0;text-align:left;} textarea{border: none; overflow: hidden;}</style>");
 		iframe.contentWindow.document.close();
 		iframe.contentDocument.body.innerHTML = _printDiv.innerHTML;
 		iframe.style.visibility = 'hidden'; //iframe.style.display = 'none'; //IE7的display只读，在创建的时候设置

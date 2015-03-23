@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   	<title>CSS Media Test</title>
+	<script type="text/javascript" src="../jquery-1.11.1.min.js"></script>
+	<!-- 打印方法1-->
+	<script type="text/javascript" src="../src/printspec.0.2.js"></script>
+	<!-- 打印方法2-->
+	<script type="text/javascript" src="../src/printspec.0.3.js"></script>
+	
+	<script type="text/javascript">
+		var _isIE;
+		function printdiv1(_divId){
+			//设置input的值为输入值
+			$("#" + _divId + " input").each(function(index,item){
+				$(item).attr("value",$(item).val());
+			});
+			$("#" + _divId + " textarea").each(function(index,item){
+				/*
+					IE下不需要做任何事情;
+					$(item).html(); //Chrome下获取不到 textarea 内容;
+				*/
+				 if(! _isIE) {
+					$(item).html($(item).val()); //IE下失去换行格式
+				}
+			});
+			
+			(new kPrinter_1(_divId)).printDiv();
+		}
+		function printdiv2(_divId){
+			//设置input的值为输入值
+			$("#" + _divId + " input").each(function(index,item){
+				$(item).attr("value",$(item).val());
+			});
+			$("#" + _divId + " textarea").each(function(index,item){
+				/*
+					IE下不需要做任何事情;
+					$(item).html(); //Chrome下获取不到 textarea 内容;
+				*/
+				 if(! _isIE) {
+					$(item).html($(item).val()); //IE下失去换行格式
+				}
+			});
+			(new kPrinter_2(_divId)).printDiv();
+		}
+		
+		$(document).ready(function(){
+			/**
+			 	判断IE浏览器最短方法：var isIE = !-[1,]
+				原理：[1,]在标准浏览器中返回"1"，相当于调用[1,].toString()，在IE中返回"1,"
+				在这个时候对返回值使用负号强制转换为数字时，标准浏览器返回1，IE则返回NaN，
+				再对1和NaN取反时，标准浏览器返回false，IE返回true。
+			*/
+			_isIE = !-[1,] ;
+			/**
+				if(navigator.userAgent.indexOf("MSIE") != -1) { } 
+			*/
+			/**
+				if(! $.browser.msie) {}
+			*/
+		});
+	</script>
+	<!--[if IE]><![endif]-->
+	<!--  
+	IE下 运行不成功 。。。
+	<style> 
+		@media print {
+			.notprint { 
+				opacity: 0;
+			}
+		}
+	</style>
+	-->
+</head>
+<body>
+<div>
+	<h1 style="Color:Red">The Div content which you don't  want to print</h1>
+	<input name="b1_print" type="button" onClick="printdiv1('div_to_print_1');" value=" Print 1">
+	<div id="div_to_print_1">
+		<div style="border: 1px solid lightblue;width:700px;height:140px;padding:40px;">
+			<span style="color:Black;" class="notprint" >发票号码 : </span>
+			<input style="color:#91aae0;" value=""></input>
+			<br/>
+			<span style="color:Black;" class="notprint">备注: </span>
+			<textarea rows="8" cols="40" style="color:#91aae0;"></textarea>
+		</div>
+	</div>
+	<br/>
+	<input name="b1_print" type="button" onClick="printdiv2('div_to_print_2');" value=" Print 2">
+	<div id="div_to_print_2">
+		<div style="border: 1px solid lightblue;width:700px;height:140px;padding:40px;">
+			<span style="color:Black;" >发票号码 : </span>
+			<input style="color:#91aae0;" class="printable"  value=""></input>
+			<span style="color:Black;">备注: </span>
+			<textarea rows="8" cols="40" style="color:#91aae0;"  class="printable"  ></textarea>
+		</div>
+	</div>
+</div>
+</body>
+<script>
+
+/* 
+ * Dropped code : not support by IE
+ *
+
+//Using template of underscore.js
+var compiled = _.template(
+	  '<div style="border: 1px solid lightblue;">'
+	+ '<h1 style="color:Red;"  class="notprint">Name : </h1>'
+	+ '<h1 style="color:Black"><%- "code"  %></h1>'
+	+ '<h1 style="color:Red;"  class="notprint">Prise : </h1>'
+	+ '<h1 style="color:Black" data-bind="时间"></h1>'
+	+ '</div>');
+compiled({'code':"123242354356"});
+$("#div_to_print").append( compiled );
+var compiled = _.template("<h1><%- '12' %></h1>");
+compiled({ 12 : "123242354356"});
+console.log(compiled);
+$("#div_to_print").append( compiled );
+$("#div_to_print").html( _.template($("#div_to_print").html(), data)); 
+
+
+//Using agility.js
+var info_view = $$({}, 
+	'<div style="border: 1px solid lightblue;">'
+	+ '<h1 style="color:Red;"  class="notprint">Name : </h1>'
+	+ '<h1 style="color:Black" data-bind="发票号码"></h1>'
+	+ '<h1 style="color:Red;"  class="notprint">Prise : </h1>'
+	+ '<h1 style="color:Black" data-bind="时间"></h1>'
+	+ '</div>'
+);
+var employmentInfo_html = $$(info_view, data);
+$("#div_to_print").append(employmentInfo_html.view.$root);
+
+<!--<h1 style="Color:Red">&copy; Copyright</h1>-->
+<!-- ©  -->
+<!-- Alt + 169 -->
+<!-- &copy;  -->
+*/
+</script>
+</html>
